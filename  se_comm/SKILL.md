@@ -87,26 +87,28 @@ Even if there's no usage yet, that itself is a signal worth noting (e.g. "trial 
 
 Consolidate the activity per customer/sales opportunity. Extract relevant information & tasks the user should know. 
 
-The following are notable: 
+The following are high priority: 
 
- - Technical questions or blockers, especially ones the user is explicitly responsible for 
- - Explicit action items for the user and whether they've been completed or are ongoing
- - Questions from the customer, and if they've been answered
- - Legal/security/procurement updates
- - Automated messages from other tools ( like Gong, Salesforce, Momentum ) relating to sales opportunities & meetings. 
+ - Technical questions or blockers that are unanswered/unresolved
+ - Explicit action items for the user that have NOT been completed
  - Scheduling requests, or any other signals of engagement 
  - **ONLY FOR EXTERNAL CUSTOMER ACTIVITY** : Any negative tone and responsiveness of messages that may increase risk of successful sales opportunity.
+
+The following are notable but of lesser priority: 
+ - Technical questions/blockers and action items the user is responsible for that HAVE been answered
+ - Legal/security/procurement updates
+ - Automated messages from other tools ( like Gong, Salesforce, Momentum ) relating to sales opportunities & meetings. 
+
 
 Synthesize findings into a structured update for the user. The format should be:
 
 ```
 <customer> : <New/SALES_OPPORTUNITY_STAGE, depends on if there is existing sales opportunity>
 
-TLDR : <bullet list of either the user owes (only if any exists) or things to know ,each 10 words max and 3 bullets max total>
+TLDR : <bullet list of HIGH PRIORITY tasks the user owes (only if any exists) or things to know ,each 10 words max >
 
-Todo : <more detailed list bullet list of what we the user owes (only if any exists), 7 bullets max>
+Other Things : <detailed list bullet list of LESSER PRIORITY information & tasks relating to the user 7 bullets max>
 
-Things to know : <more detailed bullet list of what we the user should know about this customer/activity(only if any exists),7 bullets max>
 
 ```
 
