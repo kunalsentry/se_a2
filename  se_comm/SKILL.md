@@ -1,14 +1,16 @@
-| name | description | 
-| --- | --- |
-| se-comm | Consolidate all communications from multiple sources, analyze & extract all immediate tasks or notatble events for sales engineers. |
-
+---
+name: se-comm
+description: Consolidate all communications from multiple sources, analyze & extract all immediate tasks or notatble events for sales engineers. |
+---
 
 # Sales Engineer Communication
 Consolidate all communications from a given time period across multiple sources relating to existing & new sales opportunities with prospect customers. Extract immediate tasks for sales engineer relating customer queries/issues, identify any potential updates to the sales opportunity & highlight notable information. 
 
 ## Why this skill exists
-Sales Engineer work across multiple surfaces in multiple tools. Consolidating and tracking all updates is tedious - the context is scattered. This skill does the gathering & synthesis to give the Sales Engineer a clear understanding of any communication or sales opportunity updates. It can also assist in update the relevant sources of truth ( but only if user explicitly agrees ) . 
+Sales Engineer work across multiple surfaces in multiple tools. Consolidating and tracking all updates is tedious - the context is scattered. This skill does the gathering & synthesis to give the Sales Engineer a clear understanding of any communication or sales opportunity updates. It can also invoke changes to the sales opportunity source of truth ( but only if user explicitly agrees ).
 
+## When to invoke 
+Any query relating to action items/tasks, sales opportunity activity, recent updates
 
 ## Inputs
 
@@ -16,9 +18,9 @@ The user may specify a single or multiple customers to filter communication for,
 
 A time period may also be specified, if not the default is the past 24 hours. 
 
-**IMPORTANT** : DO NOT make any modifications to any data sources through Steps 1-4. Afterwards the user may prompt for changes, but never modify unless explicitly prompted by the user. 
+**IMPORTANT** : This skill directly DOES NOT make any modifications to any data sources. Afterwards the user may prompt for changes or invoke other skills, but never modify unless explicitly prompted by the user. 
 
-## Step 1 : Retrieve all communication
+## Step 1 : Retrieve all Communication
 
 Search the below sources in parallel for all communication & information within the time period. 
 
@@ -31,14 +33,13 @@ If a customer(s) is specified, filter for activity relating to that customer.
 
 Search for all public/private messages & notifications received in the time period. 
 
-**IMPPORTANT** : Filter out any activity that clearly isn't related to a customer's interest in a technical product or a sales opportunity. If unsure, do not include activity but indicate to the user after immediate skill execution. They can query/prompt for additional context if they desire.
+**IMPORTANT** : Filter out any activity that clearly isn't related to a customer's interest in a technical product or a sales opportunity. If unsure, do not include activity but indicate to the user after immediate skill execution. They can query/prompt for additional context if they desire.
 
 For each message, read the tread or any other linked message/thread to get the full context. 
 
 If notified on any activity in the time period(replies, creation, added, mentions, ect. ), query for any relevant information to get the full context.
 
 **IMPORTANT** : Pay special attention to any activity in external customer channels ( channel name format `ext-<customer name>-...` ) or internal customer channels (channel name format `opp-<customer name>-...`/`proj-<customer name>-...`). Activity here might be the most relevant to ongoing sales opportunities. 
-
 
 
 ### Gmail 
@@ -55,19 +56,7 @@ There may be automated emails that are not direct interations with customers, bu
 
 ## Step 2 : Retrieve existing sales opportunities
 
-If not previously specified, ask the user for their currently active sales opportunities. This will usually be a  Notion page containing a database where each entry will be an active/previous sales opportunity. 
-
-**IMPORTANT** : Enumerate ALL opportunities from the database — do not use a single semantic search call, as it will silently drop records.
-
-Use `notion-search` with cursor-based pagination, iterating until no `next_cursor` is returned, to retrieve every page in the database: ``` notion-search: query = "*", data_source_url = <collection url>, cursor = <next_cursor until exhausted> ``` 
-
-**IMPORTANT** : Filter the full result set for opportunities that are active, meaning NOT in terminal states (WIN / Lost / Transferred) 
-
-Per opportunity, make **both** of the following calls before proceeding to anything else: 
-``` 
-notion-fetch: page_id = <opportunity page id>, include_discussions: true notion-get-comments: page_id = <opportunity page id> 
-``` 
-Note each opportunity's hallmark technical features, as well as customer information listed on the associated entry's page & comments. Analyze any & all of updates made.
+Retrieve all active sales opportunities of this user. First search through skills for ones that can assist, if none are present then query the user. 
 
 Correlate the existing sales opportunity information with the activity information retrieved in Step 1. 
 
@@ -122,6 +111,5 @@ Other Things : <detailed list bullet list of LESSER PRIORITY information & tasks
 
 Output the findings.
 
-**IMPORTANT** : You can add or modify to the sales opportunity database referenced in Step 2 , but explicitly ask and don't make any changes without user first confirming the specific changes.
-
+**IMPORTANT** : Creation or modifications can be made to the currently tracked sales opportunity. Search through skills that could be relevant, if none exist then indicate to the user. 
  
