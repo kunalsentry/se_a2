@@ -53,7 +53,6 @@ Filter out any emails that are personal to the user and do not relate to sales o
 There may be automated emails that are not direct interations with customers, but from tools relating to meetings and sales opportunity management like Gong, Salesforce, and support tickets. 
 
 
-
 ## Step 2 : Retrieve existing sales opportunities
 
 Retrieve all active sales opportunities of this user. First search through skills for ones that can assist, if none are present then query the user. 
@@ -62,8 +61,9 @@ Correlate the existing sales opportunity information with the activity informati
 
 **IMPORTANT** : There may be activity that doesn't have an existing sales opportunity. This is fine, in fact this may warrant the creation of a new sales opportunity in the provided database. DO NOT modify that page. The user may ask for assistance in creating a new sales opportunity after this skill runs. 
 
-## Step 3 : Hex (for usage data)
+## Step 3 : Additional Sources Querying
 
+### Hex (for usage data)
 
 If available, check trial usage data for any customers that has communication/activity in Step 1 & 2. 
 
@@ -71,6 +71,10 @@ If available, check trial usage data for any customers that has communication/ac
 
 Even if there's no usage yet, that itself is a signal worth noting (e.g. "trial hasn't started yet").
 
+### Gong ( for meeting/call information)
+A local Gong MCP server _might_ be running that can be used to query call transcripts/outlines/ect. 
+
+If available, and if any previously gathered notifications/activity/information indicating a meeting relating to a sales opportunity has occured, query Gong for any information that could be relevant for a sales engineer. For example: technical requirements/interested features, customer questions/blockers, customer sentiment, ect.) 
 
 ## Step 4: Analyze & Extract for the User
 
