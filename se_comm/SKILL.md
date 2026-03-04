@@ -111,9 +111,53 @@ Other Things : <detailed list bullet list of LESSER PRIORITY information & tasks
 - The reader (a sales engineer) wants to know "what do I need to know or do" from reading the TLDR
 - Flag Risks, anything that could jepordize the customer's engagement from a technical standpoint.
 
-## Step 4: Output findings
+## Step 5: Output findings to Slack Canvas
 
-Output the findings.
+Output the findings both to the user in chat AND to a private Slack canvas for persistent tracking.
 
-**IMPORTANT** : Creation or modifications can be made to the currently tracked sales opportunity. Search through skills that could be relevant, if none exist then indicate to the user. 
+### Canvas workflow
+
+1. **Search for existing canvas** : Search Slack for a canvas titled `"SE Action Items"` created by the current user (use `type:canvases creator:@me` file search).
+2. **If an existing canvas is found** : Read the canvas content. Note any items that have already been checked off — these should be preserved as-is in the new canvas (do not uncheck them).
+3. **Create/replace the canvas** : Create a new Slack canvas titled `"SE Action Items"`. The canvas API does not support editing, so each run creates a fresh canvas that supersedes the previous one.
+
+### Canvas content format
+
+Structure the canvas as follows:
+
+```
+# SE Action Items
+*Last updated: <current date & time>*
+
+## <Customer Name> — <New/SALES_OPPORTUNITY_STAGE>
+
+### Action Items
+- [ ] <HIGH PRIORITY action item 1>
+- [ ] <HIGH PRIORITY action item 2>
+...
+
+### Other Notable
+- <LESSER PRIORITY item 1>
+- <LESSER PRIORITY item 2>
+...
+
+(repeat per customer)
+
+---
+## Completed (from previous run)
+- [x] <any previously checked-off items carried over>
+```
+
+**IMPORTANT formatting rules:**
+- Every HIGH PRIORITY action item from the TLDR MUST be a checkbox (`- [ ]`)
+- Lesser priority / informational items are regular bullet points (no checkbox)
+- If a previous canvas existed, any items marked `- [x]` (checked) should be preserved in a "Completed" section at the bottom
+- New items that duplicate a completed item should NOT be re-added as unchecked
+- Keep each checkbox item concise (under 15 words) but specific enough to act on
+
+### After canvas creation
+
+- Share the canvas link with the user in the chat output
+- DM the user a link to the channel
+- Also display the structured per-customer summary (from Step 3's format) directly in chat for immediate visibility
  
